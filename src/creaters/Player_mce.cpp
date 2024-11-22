@@ -2,6 +2,7 @@
 #include "Event.hpp"
 #include "SDL_keycode.h"
 #include "Vector2f.hpp"
+#include "Light.hpp"
 
 #define ENTITY_TAG "{}"
 #define IMAGE_FILE "res/images/jet.png"
@@ -40,6 +41,10 @@ void Player::createInstance(Vector2f centerPosition) {
 void Player::configureInstance(Entity *entity) {
   Sprite *sprite = entity->add<Sprite>();
   sprite->image = {IMAGE_FILE};
+
+  Entity *light = GameManager::createEntity("Light");
+  light->add<Alignment>()->parent = entity;
+  createLight(light, Vector2f(0, 0), 100, {255, 255, 200});
 
   entity->add<Player>();
 }
