@@ -1,35 +1,36 @@
-#include "creaters/Bullet_mce.hpp"
+#include "creaters/PlayerBullet_mce.hpp"
 #include "Alighnment.hpp"
 #include "Light.hpp"
 #include "Vector2f.hpp"
 
-#define ENTITY_TAG "Bullet"
+#define ENTITY_TAG "PlayerBullet"
 #define IMAGE_FILE "res/images/bullet.png"
 #define SIZE {16, 16}
-int ENEMY_BULLET_SPEED = 400;
+int PLAYER_BULLET_SPEED = 1200;
 
-void Bullet::start() {}
+void PlayerBullet::start() {}
 
-void Bullet::update(float deltaTime) {
+void PlayerBullet::update(float deltaTime) {
   entity->box.position +=
-      entity->get<Sprite>()->angle.getVector() * ENEMY_BULLET_SPEED * deltaTime;
+      entity->get<Sprite>()->angle.getVector() * PLAYER_BULLET_SPEED * deltaTime;
 }
 
-void Bullet::createInstance(Vector2f centerPosition, Angle direction) {
+void PlayerBullet::createInstance(Vector2f centerPosition, Angle direction) {
   Entity *entity = GameManager::createEntity(ENTITY_TAG);
   entity->box.size = SIZE;
   entity->box.setWithCenter(centerPosition);
   configureInstance(entity, direction);
 }
 
-void Bullet::configureInstance(Entity *entity, Angle direction) {
+void PlayerBullet::configureInstance(Entity *entity, Angle direction) {
   Sprite *sprite = entity->add<Sprite>();
   sprite->image = {IMAGE_FILE};
+  sprite->image.color = {255, 255, 0};
   sprite->angle = direction;
 
   Entity *light = GameManager::createEntity("Light");
   light->add<Alignment>()->parent = entity;
-  createLight(light, Vector2f(0, 0), 100, {255, 0, 0});
+  createLight(light, Vector2f(0, 0), 100, {0, 255, 0});
 
-  entity->add<Bullet>();
+  entity->add<PlayerBullet>();
 }

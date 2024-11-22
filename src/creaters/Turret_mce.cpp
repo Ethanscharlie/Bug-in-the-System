@@ -2,6 +2,7 @@
 #include "Bullet_mce.hpp"
 #include "Scheduler.hpp"
 #include "Vector2f.hpp"
+#include "components/Enemy_component.hpp"
 #include "creaters/Light.hpp"
 
 #define ENTITY_TAG "{}"
@@ -36,6 +37,8 @@ void Turret::configureInstance(Entity *entity) {
   Entity *light = GameManager::createEntity("Light");
   light->add<Alignment>()->parent = entity;
   createLight(light, Vector2f(0, 0), 400, {220, 0, 0});
+
+  entity->add<Enemy>();
 
   entity->add<Turret>();
 }

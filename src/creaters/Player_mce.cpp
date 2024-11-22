@@ -1,8 +1,9 @@
 #include "Player_mce.hpp"
 #include "Event.hpp"
+#include "Light.hpp"
 #include "SDL_keycode.h"
 #include "Vector2f.hpp"
-#include "Light.hpp"
+#include "creaters/PlayerBullet_mce.hpp"
 
 #define ENTITY_TAG "{}"
 #define IMAGE_FILE "res/images/jet.png"
@@ -24,11 +25,22 @@ void Player::moveForward() {
 }
 
 void Player::update(float deltaTime) {
+  // Movement
   if (InputManager::keyEvents[SDLK_SPACE]) {
     turn();
+    PlayerBullet::createInstance(entity->box.getCenter(), direction);
   }
 
   moveForward();
+
+  // Collisions
+  Circle playerCircle(entity->box.getCenter(), 7);
+  for (Entity *bullet : GameManager::getEntities("Bullet")) {
+    Circle bulletCircle(bullet->box.getCenter(), entity->box.size.x / 2);
+    if (bulletCircle.checkCollision(playerCircle)) {
+      entity->toDestroy = true;
+    }
+  }
 }
 
 void Player::createInstance(Vector2f centerPosition) {

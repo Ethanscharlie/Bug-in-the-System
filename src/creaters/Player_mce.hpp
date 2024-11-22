@@ -7,10 +7,18 @@ public:
   void start() override;
   void update(float deltaTime) override;
   static void createInstance(Vector2f centerPosition = {0, 0});
-  static void configureInstance(Entity* entity);
-  void turn(float degrees=90);
+  static void configureInstance(Entity *entity);
+  void turn(float degrees = 90);
+  void setAngle(Angle newAngle);
   void moveForward();
 
   Angle direction;
-};
+  Angle tempAngleCapture;
 
+  float charge = 0;
+  float chargeMax = 100;
+
+private:
+  void onPress();
+  void onHold();
+};
