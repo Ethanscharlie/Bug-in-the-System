@@ -2,7 +2,9 @@
 #include "Vector2f.hpp"
 #include "creaters/Player_mce.hpp"
 #include "creaters/Turret_mce.hpp"
+#include <functional>
 #include <iostream>
+#include <vector>
 
 int main(int, char **) {
   GameManager::init();
@@ -15,10 +17,6 @@ int main(int, char **) {
   background->add<Sprite>()->image = {"res/images/background.png"};
 
   Player::createInstance({0, 0});
-
-  Turret::createInstance({0, 0});
-  Turret::createInstance(Vector2f(0, 0) - GameManager::gameWindowSize / 2 +
-                         100);
 
   GameManager::doUpdateLoop();
   return 0;

@@ -3,13 +3,23 @@
 #include "Light.hpp"
 #include "SDL_keycode.h"
 #include "Vector2f.hpp"
+#include "components/Enemy_component.hpp"
 #include "creaters/PlayerBullet_mce.hpp"
+#include "creaters/Turret_mce.hpp"
 
 #define ENTITY_TAG "{}"
 #define IMAGE_FILE "res/images/jet.png"
 Vector2f SIZE_RATIO{17, 16};
 int SCALE = 3;
 float MOVE_SPEED = 500;
+
+std::vector<std::function<void()>> levels = {
+    []() { Turret::createInstance({0, 0}); },
+    []() { Turret::createInstance({0, 100}); },
+    []() { Turret::createInstance({200, 100}); },
+};
+
+int currentLevel = 0;
 
 void Player::start() { turn(45); }
 
@@ -38,7 +48,20 @@ void Player::update(float deltaTime) {
   for (Entity *bullet : GameManager::getEntities("Bullet")) {
     Circle bulletCircle(bullet->box.getCenter(), entity->box.size.x / 2);
     if (bulletCircle.checkCollision(playerCircle)) {
-      entity->toDestroy = true;
+      for (Enemy *enemy : GameManager::getComponents<Enemy>()) {
+        enemy->entity->toDestroy = true;
+      }
+
+      entity->box.position = {0, 0};
+      levels[currentLevel - 1]();
+    }
+  }
+
+  // Level
+  if (GameManager::getComponents<Enemy>().size() <= 0) {
+    if (levels.size() > currentLevel) {
+      levels[currentLevel]();
+      currentLevel++;
     }
   }
 }
