@@ -6,4 +6,6 @@ class Enemy : public Component {
 public:
   void start() override;
   void update(float deltaTime) override;
+
+  float tempPos;
 };

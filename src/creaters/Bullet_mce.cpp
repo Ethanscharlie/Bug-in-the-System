@@ -8,11 +8,22 @@
 #define SIZE {16, 16}
 int ENEMY_BULLET_SPEED = 400;
 
-void Bullet::start() {}
+void Bullet::start() {
+  light = GameManager::createEntity("Light");
+  light->add<Alignment>()->parent = entity;
+  createLight(light, Vector2f(0, 0), 100, {255, 0, 0});
+}
+
+void Bullet::onDestroy() { light->toDestroy = true; }
 
 void Bullet::update(float deltaTime) {
   entity->box.position +=
       entity->get<Sprite>()->angle.getVector() * ENEMY_BULLET_SPEED * deltaTime;
+
+  if (!entity->box.checkCollision(
+          GameManager::getEntities("Background")[0]->box)) {
+    entity->toDestroy = true;
+  }
 }
 
 void Bullet::createInstance(Vector2f centerPosition, Angle direction) {
@@ -26,10 +37,6 @@ void Bullet::configureInstance(Entity *entity, Angle direction) {
   Sprite *sprite = entity->add<Sprite>();
   sprite->image = {IMAGE_FILE};
   sprite->angle = direction;
-
-  Entity *light = GameManager::createEntity("Light");
-  light->add<Alignment>()->parent = entity;
-  createLight(light, Vector2f(0, 0), 100, {255, 0, 0});
 
   entity->add<Bullet>();
 }

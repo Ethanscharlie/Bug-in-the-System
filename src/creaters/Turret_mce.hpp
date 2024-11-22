@@ -6,9 +6,10 @@ class Turret : public Component {
 public:
   void start() override;
   void update(float deltaTime) override;
+  void onDestroy() override;
   static void createInstance(Vector2f centerPosition = {0, 0});
-  static void configureInstance(Entity* entity);
+  static void configureInstance(Entity *entity);
 
   Angle fireAngle;
+  Entity *light = nullptr;
 };
-

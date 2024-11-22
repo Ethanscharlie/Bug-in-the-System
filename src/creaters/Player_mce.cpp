@@ -4,6 +4,7 @@
 #include "SDL_keycode.h"
 #include "Vector2f.hpp"
 #include "components/Enemy_component.hpp"
+#include "creaters/Bullet_mce.hpp"
 #include "creaters/PlayerBullet_mce.hpp"
 #include "creaters/Turret_mce.hpp"
 
@@ -20,6 +21,8 @@ std::vector<std::function<void()>> levels = {
 };
 
 int currentLevel = 0;
+
+static void loadLevel(int levelIndex) { levels[levelIndex](); }
 
 void Player::start() { turn(45); }
 
@@ -51,16 +54,19 @@ void Player::update(float deltaTime) {
       for (Enemy *enemy : GameManager::getComponents<Enemy>()) {
         enemy->entity->toDestroy = true;
       }
+      for (Bullet *bullet : GameManager::getComponents<Bullet>()) {
+        bullet->entity->toDestroy = true;
+      }
 
       entity->box.position = {0, 0};
-      levels[currentLevel - 1]();
+      loadLevel(currentLevel - 1);
     }
   }
 
   // Level
   if (GameManager::getComponents<Enemy>().size() <= 0) {
     if (levels.size() > currentLevel) {
-      levels[currentLevel]();
+      loadLevel(currentLevel);
       currentLevel++;
     }
   }

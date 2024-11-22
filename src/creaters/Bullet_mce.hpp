@@ -8,5 +8,8 @@ public:
   void update(float deltaTime) override;
   static void createInstance(Vector2f centerPosition = {0, 0}, Angle direction=Angle());
   static void configureInstance(Entity* entity, Angle direction);
+  void onDestroy() override;
+
+  Entity* light = nullptr;
 };
 
