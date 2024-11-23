@@ -2,6 +2,8 @@
 
 #include "Charlie2D.hpp"
 
+inline Mix_Music *music;
+
 class Player : public Component {
 public:
   void start() override;

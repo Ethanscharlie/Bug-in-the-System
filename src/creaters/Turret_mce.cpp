@@ -43,7 +43,7 @@ void Turret::configureInstance(Entity *entity, float fireRate,
 
   entity->add<Scheduler>()->addSchedule("fire", fireRate, [entity, turret]() {
     if (entity->get<Enemy>()->allowFire) {
-      Bullet::createInstance(entity->box.position, turret->fireAngle);
+      Bullet::createInstance(entity->box.getCenter(), turret->fireAngle);
     }
   });
 }

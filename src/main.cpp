@@ -13,8 +13,8 @@ void play_music() {
     fprintf(stderr, "Could not initialize SDL_mixer: %s\n", Mix_GetError());
   }
 
-  Mix_Music *music = Mix_LoadMUS(
-      "res/audio/music/Juhani Junkala [Retro Game Music Pack] Level 3.wav");
+  music = Mix_LoadMUS(
+      "res/audio/music/Juhani Junkala [Retro Game Music Pack] Level 2.wav");
   if (!music) {
     fprintf(stderr, "Failed to load music: %s\n", Mix_GetError());
     Mix_CloseAudio();

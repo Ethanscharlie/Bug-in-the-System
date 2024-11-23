@@ -19,16 +19,20 @@ void Drone::start() {
 
 void Drone::pickPosition() {
   targetPos = GameManager::getComponents<Player>()[0]->entity->box.getCenter();
+  targetPos.x += randFloat(-100, 100);
+  targetPos.y += randFloat(-100, 100);
 }
 
 void Drone::update(float deltaTime) {
-  Angle &angle = entity->add<Sprite>()->angle;
-  angle.lookAt(entity->box.getCenter(), targetPos);
-  entity->box.position += angle.getVector() * 400 * deltaTime;
+  if (entity->get<Enemy>()->allowFire) {
+    Angle &angle = entity->add<Sprite>()->angle;
+    angle.lookAt(entity->box.getCenter(), targetPos);
+    entity->box.position += angle.getVector() * 300 * deltaTime;
 
-  if (Circle(entity->box.getCenter(), 10)
-          .checkCollision(Circle(targetPos, 1))) {
-    pickPosition();
+    if (Circle(entity->box.getCenter(), 10)
+            .checkCollision(Circle(targetPos, 1))) {
+      pickPosition();
+    }
   }
 }
 

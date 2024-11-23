@@ -1,7 +1,6 @@
 #include "Enemy_component.hpp"
 #include "AudioHeader.hpp"
-#include <chrono>
-#include <thread>
+#include "creaters/Drone_mce.hpp"
 
 void Enemy::start() {
   tempPos = entity->box.position.y;
@@ -9,7 +8,7 @@ void Enemy::start() {
 }
 
 void Enemy::update(float deltaTime) {
-  if (entity->box.position.y < tempPos) {
+  if (entity->box.position.y < tempPos && !allowFire) {
     entity->box.position.y += 300 * deltaTime;
   } else {
     allowFire = true;
@@ -19,9 +18,8 @@ void Enemy::update(float deltaTime) {
       Circle bulletCircle(bullet->box.getCenter(), entity->box.size.x / 2);
       if (bulletCircle.checkCollision(myCircle)) {
         entity->toDestroy = true;
+        bullet->toDestroy = true;
         Audio(ENEMY_DEATH_SOUND).play();
-        // std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        // GameManager::lastTime = deltaTime;
       }
     }
   }
