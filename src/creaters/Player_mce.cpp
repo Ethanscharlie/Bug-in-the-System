@@ -1,14 +1,15 @@
 #include "Player_mce.hpp"
 #include "Event.hpp"
 #include "Light.hpp"
-#include <format>
 #include "SDL_keycode.h"
 #include "Vector2f.hpp"
 #include "components/Enemy_component.hpp"
 #include "creaters/Bullet_mce.hpp"
+#include "creaters/Drone_mce.hpp"
 #include "creaters/MultiTurret_mce.hpp"
 #include "creaters/PlayerBullet_mce.hpp"
 #include "creaters/Turret_mce.hpp"
+#include <format>
 
 #define ENTITY_TAG "{}"
 #define IMAGE_FILE "res/images/jet.png"
@@ -17,6 +18,10 @@ int SCALE = 3;
 float MOVE_SPEED = 500;
 
 std::vector<std::function<void()>> levels = {
+    []() {
+      Drone::createInstance({0, 0});
+      ;
+    },
     []() {
       Turret::createInstance({0, 0});
       ;
@@ -45,9 +50,9 @@ std::vector<std::function<void()>> levels = {
 
 int currentLevel = 0;
 
-static void loadLevel(int levelIndex) { 
+static void loadLevel(int levelIndex) {
   std::cout << std::format("NEXT LEVEL: {}\n", levelIndex);
-  levels[levelIndex](); 
+  levels[levelIndex]();
 }
 
 void Player::start() { turn(45); }
@@ -84,19 +89,30 @@ void Player::update(float deltaTime) {
   }
 
   // Collisions
+  auto onPlayerDeath([&]() {
+    for (Enemy *enemy : GameManager::getComponents<Enemy>()) {
+      enemy->entity->toDestroy = true;
+    }
+    for (Bullet *bullet : GameManager::getComponents<Bullet>()) {
+      bullet->entity->toDestroy = true;
+    }
+
+    entity->box.position = {0, 0};
+    loadLevel(currentLevel - 1);
+  });
+
   Circle playerCircle(entity->box.getCenter(), 7);
   for (Entity *bullet : GameManager::getEntities("Bullet")) {
-    Circle bulletCircle(bullet->box.getCenter(), entity->box.size.x / 2);
+    Circle bulletCircle(bullet->box.getCenter(), bullet->box.size.x / 2);
     if (bulletCircle.checkCollision(playerCircle)) {
-      for (Enemy *enemy : GameManager::getComponents<Enemy>()) {
-        enemy->entity->toDestroy = true;
-      }
-      for (Bullet *bullet : GameManager::getComponents<Bullet>()) {
-        bullet->entity->toDestroy = true;
-      }
-
-      entity->box.position = {0, 0};
-      loadLevel(currentLevel - 1);
+      onPlayerDeath();
+    }
+  }
+  for (Enemy *enemy : GameManager::getComponents<Enemy>()) {
+    Circle enemyCircle(enemy->entity->box.getCenter(),
+                       enemy->entity->box.size.x / 2);
+    if (enemyCircle.checkCollision(playerCircle)) {
+      onPlayerDeath();
     }
   }
 

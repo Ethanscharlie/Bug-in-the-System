@@ -23,7 +23,7 @@ void MultiTurret::createInstance(Vector2f centerPosition, float firerate,
   Entity *entity = GameManager::createEntity(ENTITY_TAG);
   entity->box.size = Vector2f(SIZE) * 2;
   entity->box.setWithCenter(centerPosition);
-  configureInstance(entity);
+  configureInstance(entity, firerate, directionCount);
 }
 
 void MultiTurret::configureInstance(Entity *entity, float firerate,
