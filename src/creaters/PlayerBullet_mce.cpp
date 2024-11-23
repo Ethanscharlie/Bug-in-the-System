@@ -19,6 +19,11 @@ void PlayerBullet::start() {
 void PlayerBullet::update(float deltaTime) {
   entity->box.position += entity->get<Sprite>()->angle.getVector() *
                           PLAYER_BULLET_SPEED * deltaTime;
+
+  if (!entity->box.checkCollision(
+          GameManager::getEntities("Background")[0]->box)) {
+    entity->toDestroy = true;
+  }
 }
 
 void PlayerBullet::createInstance(Vector2f centerPosition, Angle direction) {

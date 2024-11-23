@@ -207,8 +207,7 @@ std::vector<std::function<void()>> levels = {
     },
 };
 
-// int currentLevel = 0;
-int currentLevel = levels.size() - 3;
+int currentLevel = 0;
 
 static void loadLevel(int levelIndex) {
   std::cout << std::format("NEXT LEVEL: {}\n", levelIndex);
