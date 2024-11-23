@@ -164,7 +164,7 @@ iteration, like player movement static float deltaTime;
 
   static ShadowFilter *shadowFilter;
 
-private:
+// private:
   /**
    * Deletes
    */

@@ -1,4 +1,6 @@
 #include "Enemy_component.hpp"
+#include <chrono>
+#include <thread>
 
 void Enemy::start() {
   tempPos = entity->box.position.y;
@@ -15,6 +17,8 @@ void Enemy::update(float deltaTime) {
     Circle bulletCircle(bullet->box.getCenter(), entity->box.size.x / 2);
     if (bulletCircle.checkCollision(myCircle)) {
       entity->toDestroy = true;
+      std::this_thread::sleep_for(std::chrono::milliseconds(200));
+      GameManager::lastTime = deltaTime;
     }
   }
 }
