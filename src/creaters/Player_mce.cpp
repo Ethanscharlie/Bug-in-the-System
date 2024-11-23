@@ -1,10 +1,12 @@
 #include "Player_mce.hpp"
 #include "Event.hpp"
 #include "Light.hpp"
+#include <format>
 #include "SDL_keycode.h"
 #include "Vector2f.hpp"
 #include "components/Enemy_component.hpp"
 #include "creaters/Bullet_mce.hpp"
+#include "creaters/MultiTurret_mce.hpp"
 #include "creaters/PlayerBullet_mce.hpp"
 #include "creaters/Turret_mce.hpp"
 
@@ -15,14 +17,38 @@ int SCALE = 3;
 float MOVE_SPEED = 500;
 
 std::vector<std::function<void()>> levels = {
-    []() { Turret::createInstance({0, 0}); },
-    []() { Turret::createInstance({0, 100}); },
-    []() { Turret::createInstance({200, 100}); },
+    []() {
+      Turret::createInstance({0, 0});
+      ;
+    },
+    []() {
+      Turret::createInstance({0, -250});
+      Turret::createInstance({500, 0});
+      Turret::createInstance({-500, 0});
+      ;
+    },
+    []() {
+      MultiTurret::createInstance({0, -200}, 60);
+      ;
+    },
+    []() {
+      MultiTurret::createInstance({-500, 0}, 20);
+      Turret::createInstance({200, 0});
+      ;
+    },
+    []() {
+      MultiTurret::createInstance({-400, -400}, 60);
+      MultiTurret::createInstance({400, 400}, 60);
+      ;
+    },
 };
 
 int currentLevel = 0;
 
-static void loadLevel(int levelIndex) { levels[levelIndex](); }
+static void loadLevel(int levelIndex) { 
+  std::cout << std::format("NEXT LEVEL: {}\n", levelIndex);
+  levels[levelIndex](); 
+}
 
 void Player::start() { turn(45); }
 
@@ -45,6 +71,17 @@ void Player::update(float deltaTime) {
   }
 
   moveForward();
+
+  // Reflection
+  if (entity->box.position.x < -GameManager::gameWindowSize.x / 2) {
+    entity->box.position.x = GameManager::gameWindowSize.x / 2;
+  } else if (entity->box.position.x > GameManager::gameWindowSize.x / 2) {
+    entity->box.position.x = -GameManager::gameWindowSize.x / 2;
+  } else if (entity->box.position.y < -GameManager::gameWindowSize.y / 2) {
+    entity->box.position.y = GameManager::gameWindowSize.y / 2;
+  } else if (entity->box.position.y > GameManager::gameWindowSize.y / 2) {
+    entity->box.position.y = -GameManager::gameWindowSize.y / 2;
+  }
 
   // Collisions
   Circle playerCircle(entity->box.getCenter(), 7);

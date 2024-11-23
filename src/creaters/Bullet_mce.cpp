@@ -2,6 +2,7 @@
 #include "Alighnment.hpp"
 #include "Light.hpp"
 #include "Vector2f.hpp"
+#include "AudioHeader.hpp"
 
 #define ENTITY_TAG "Bullet"
 #define IMAGE_FILE "res/images/bullet.png"
@@ -34,6 +35,10 @@ void Bullet::createInstance(Vector2f centerPosition, Angle direction) {
 }
 
 void Bullet::configureInstance(Entity *entity, Angle direction) {
+  Audio sfx(AUDIO_ENEMY_FIRE);
+  Mix_VolumeChunk(sfx.chunk, 40);
+  sfx.play();
+
   Sprite *sprite = entity->add<Sprite>();
   sprite->image = {IMAGE_FILE};
   sprite->angle = direction;

@@ -8,4 +8,5 @@ public:
   void update(float deltaTime) override;
 
   float tempPos;
+  bool allowFire = false;
 };
