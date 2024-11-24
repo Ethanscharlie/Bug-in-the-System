@@ -4,6 +4,7 @@
 #include "SDL_keycode.h"
 #include "SDL_mixer.h"
 #include "Scheduler.hpp"
+#include "Sprite.hpp"
 #include "Vector2f.hpp"
 #include "components/Enemy_component.hpp"
 #include "creaters/Boss_mce.hpp"
@@ -23,6 +24,7 @@
 Vector2f SIZE_RATIO{17, 16};
 int SCALE = 3;
 float MOVE_SPEED = 500;
+float PLAYER_ROTATE_SPEED = 1000;
 
 static void loadLevel(int levelIndex) {
   std::cout << std::format("NEXT LEVEL: {}\n", levelIndex);
@@ -34,7 +36,6 @@ void Player::start() { turn(45); }
 void Player::turn(float degrees) {
   direction.rotate(degrees);
   Sprite *sprite = entity->get<Sprite>();
-  sprite->angle = direction;
 }
 
 void Player::moveForward() {
@@ -50,6 +51,26 @@ void Player::update(float deltaTime) {
   }
 
   moveForward();
+
+  // Smooth turn
+  Sprite *sprite = entity->get<Sprite>();
+
+  Angle a;
+  a.rotate(45);
+
+  if (direction.radians > 1) {
+    if (sprite->angle.radians < direction.radians) {
+      sprite->angle.rotate(PLAYER_ROTATE_SPEED * deltaTime);
+    } else {
+      sprite->angle = direction;
+    }
+  } else {
+    if ((sprite->angle.radians > a.radians)) {
+      sprite->angle.rotate(PLAYER_ROTATE_SPEED * deltaTime);
+    } else {
+      sprite->angle = direction;
+    }
+  }
 
   // Reflection
   if (entity->box.position.x < -GameManager::gameWindowSize.x / 2) {

@@ -47,6 +47,8 @@ void Drone::configureInstance(Entity *entity) {
     sprite->image = {IMAGE_FILE};
   }
 
+  entity->layer = 1;
+
   entity->add<Enemy>();
   Drone *drone = entity->add<Drone>();
 

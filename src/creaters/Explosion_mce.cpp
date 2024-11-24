@@ -18,9 +18,8 @@ void Explosion::update(float deltaTime) {}
 
 void Explosion::onDestroy() { light->toDestroy = true; }
 
-static std::vector<Image>
-generateSpritesheetAnimationButNotShit(Image image, int gridSize = 16,
-                                       int row = 0) {
+std::vector<Image>
+generateSpritesheetAnimationButNotShit(Image image, int gridSize, int row) {
   int width, height;
   SDL_QueryTexture(image.texture, nullptr, nullptr, &width, &height);
 
