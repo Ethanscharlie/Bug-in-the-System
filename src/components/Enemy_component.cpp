@@ -17,10 +17,14 @@ void Enemy::update(float deltaTime) {
     for (Entity *bullet : GameManager::getEntities("PlayerBullet")) {
       Circle bulletCircle(bullet->box.getCenter(), entity->box.size.x / 2);
       if (bulletCircle.checkCollision(myCircle)) {
-        entity->toDestroy = true;
+        health--;
         bullet->toDestroy = true;
         Audio(ENEMY_DEATH_SOUND).play();
       }
+    }
+
+    if (health <= 0) {
+      entity->toDestroy = true;
     }
   }
 }

@@ -6,6 +6,7 @@
 #include "Scheduler.hpp"
 #include "Vector2f.hpp"
 #include "components/Enemy_component.hpp"
+#include "creaters/Boss_mce.hpp"
 #include "creaters/Bullet_mce.hpp"
 #include "creaters/Drone_mce.hpp"
 #include "creaters/MultiTurret_mce.hpp"
@@ -22,6 +23,10 @@ float MOVE_SPEED = 500;
 static bool donttouchmusic = false;
 
 std::vector<std::function<void()>> levels = {
+    []() {
+      Boss::createInstance({0, 0});
+      ;
+    },
     []() {
       Turret::createInstance({0, 0});
       ;

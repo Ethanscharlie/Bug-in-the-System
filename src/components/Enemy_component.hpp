@@ -9,4 +9,5 @@ public:
 
   float tempPos;
   bool allowFire = false;
+  int health = 1;
 };
