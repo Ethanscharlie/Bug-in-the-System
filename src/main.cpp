@@ -1,6 +1,7 @@
 #include "Charlie2D.hpp"
 #include "Vector2f.hpp"
 #include "creaters/Player_mce.hpp"
+#include "creaters/TextDrifter_mce.hpp"
 #include "creaters/Turret_mce.hpp"
 #include <functional>
 #include <iostream>

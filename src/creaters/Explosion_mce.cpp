@@ -1,4 +1,5 @@
 #include "Explosion_mce.hpp"
+#include "AudioHeader.hpp"
 #include "Math.hpp"
 #include "creaters/Light.hpp"
 
@@ -7,6 +8,7 @@
   { 17, 17 }
 
 void Explosion::start() {
+  Audio(ENEMY_DEATH_SOUND).play();
   light = GameManager::createEntity("Light");
   light->add<Alignment>()->parent = entity;
   createLight(light, Vector2f(0, -1000), 400, {220, 0, 0});

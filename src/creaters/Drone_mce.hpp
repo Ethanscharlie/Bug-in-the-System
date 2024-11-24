@@ -9,11 +9,9 @@ public:
   void update(float deltaTime) override;
   void onDestroy() override;
   static void createInstance(Vector2f centerPosition = {0, 0});
-  static void configureInstance(Entity* entity);
+  static void configureInstance(Entity *entity);
 
   void pickPosition();
 
-  Entity *light = nullptr;
   Vector2f targetPos;
 };
-

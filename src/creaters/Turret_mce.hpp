@@ -13,7 +13,6 @@ public:
                                 float rotationSpeed = 60);
 
   Angle fireAngle;
-  Entity *light = nullptr;
   float fireRate = 500;
   float rotationSpeed = 60;
 };

@@ -8,15 +8,11 @@
 #define SIZE                                                                   \
   { 32, 32 }
 
-void MultiTurret::start() {
-  light = GameManager::createEntity("Light");
-  light->add<Alignment>()->parent = entity;
-  createLight(light, Vector2f(0, -1000), 400, {220, 0, 0});
-}
+void MultiTurret::start() {}
 
 void MultiTurret::update(float deltaTime) {}
 
-void MultiTurret::onDestroy() { light->toDestroy = true; }
+void MultiTurret::onDestroy() {}
 
 void MultiTurret::createInstance(Vector2f centerPosition, float firerate,
                                  int directionCount) {

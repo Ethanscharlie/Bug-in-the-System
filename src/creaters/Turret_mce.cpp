@@ -9,17 +9,13 @@
 #define IMAGE_FILE "res/images/turret.png"
 Vector2f SIZE = {32, 32};
 
-void Turret::start() {
-  light = GameManager::createEntity("Light");
-  light->add<Alignment>()->parent = entity;
-  createLight(light, Vector2f(0, -1000), 400, {220, 0, 0});
-}
+void Turret::start() {}
 
 void Turret::update(float deltaTime) {
   fireAngle.rotate(rotationSpeed * deltaTime);
 }
 
-void Turret::onDestroy() { light->toDestroy = true; }
+void Turret::onDestroy() {}
 
 void Turret::createInstance(Vector2f centerPosition, float fireRate,
                             float rotationSpeed) {

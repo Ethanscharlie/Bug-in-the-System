@@ -11,11 +11,7 @@
 #define IMAGE_FILE "res/images/turret.png"
 Vector2f DRONE_SIZE = {32, 32};
 
-void Drone::start() {
-  light = GameManager::createEntity("Light");
-  light->add<Alignment>()->parent = entity;
-  createLight(light, Vector2f(0, -1000), 400, {220, 0, 0});
-}
+void Drone::start() {}
 
 void Drone::pickPosition() {
   targetPos = GameManager::getComponents<Player>()[0]->entity->box.getCenter();
@@ -27,7 +23,7 @@ void Drone::update(float deltaTime) {
   if (entity->get<Enemy>()->allowFire) {
     Angle &angle = entity->add<Sprite>()->angle;
     angle.lookAt(entity->box.getCenter(), targetPos);
-    entity->box.position += angle.getVector() * 300 * deltaTime;
+    entity->box.position += angle.getVector() * 200 * deltaTime;
 
     if (Circle(entity->box.getCenter(), 10)
             .checkCollision(Circle(targetPos, 1))) {
@@ -36,7 +32,7 @@ void Drone::update(float deltaTime) {
   }
 }
 
-void Drone::onDestroy() { light->toDestroy = true; }
+void Drone::onDestroy() {}
 
 void Drone::createInstance(Vector2f centerPosition) {
   Entity *entity = GameManager::createEntity(ENTITY_TAG);
