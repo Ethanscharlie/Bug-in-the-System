@@ -1,6 +1,7 @@
 #include "Enemy_component.hpp"
 #include "AudioHeader.hpp"
 #include "creaters/Drone_mce.hpp"
+#include "creaters/Explosion_mce.hpp"
 
 void Enemy::start() {
   tempPos = entity->box.position.y;
@@ -15,7 +16,7 @@ void Enemy::update(float deltaTime) {
 
     Circle myCircle(entity->box.getCenter(), 7);
     for (Entity *bullet : GameManager::getEntities("PlayerBullet")) {
-      Circle bulletCircle(bullet->box.getCenter(), entity->box.size.x / 2);
+      Circle bulletCircle(bullet->box.getCenter(), entity->box.size.y / 2);
       if (bulletCircle.checkCollision(myCircle)) {
         health--;
         bullet->toDestroy = true;
@@ -25,6 +26,7 @@ void Enemy::update(float deltaTime) {
 
     if (health <= 0) {
       entity->toDestroy = true;
+      Explosion::createInstance(entity->box.getCenter());
     }
   }
 }

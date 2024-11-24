@@ -9,6 +9,7 @@
 #include "creaters/Boss_mce.hpp"
 #include "creaters/Bullet_mce.hpp"
 #include "creaters/Drone_mce.hpp"
+#include "creaters/Explosion_mce.hpp"
 #include "creaters/MultiTurret_mce.hpp"
 #include "creaters/PlayerBullet_mce.hpp"
 #include "creaters/Turret_mce.hpp"
@@ -24,7 +25,8 @@ static bool donttouchmusic = false;
 
 std::vector<std::function<void()>> levels = {
     []() {
-      Boss::createInstance({0, 0});
+      Boss::createInstance({0, -300});
+      Explosion::createInstance({0,0});
       ;
     },
     []() {
@@ -274,7 +276,7 @@ void Player::update(float deltaTime) {
   }
   for (Enemy *enemy : GameManager::getComponents<Enemy>()) {
     Circle enemyCircle(enemy->entity->box.getCenter(),
-                       enemy->entity->box.size.x / 2);
+                       enemy->entity->box.size.y / 2);
     if (enemyCircle.checkCollision(playerCircle)) {
       onPlayerDeath();
     }

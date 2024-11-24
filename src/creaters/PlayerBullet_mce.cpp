@@ -3,6 +3,7 @@
 #include "AudioHeader.hpp"
 #include "Light.hpp"
 #include "Vector2f.hpp"
+#include "creaters/Explosion_mce.hpp"
 
 #define ENTITY_TAG "PlayerBullet"
 #define IMAGE_FILE "res/images/bullet.png"
@@ -33,7 +34,9 @@ void PlayerBullet::createInstance(Vector2f centerPosition, Angle direction) {
   configureInstance(entity, direction);
 }
 
-void PlayerBullet::onDestroy() { light->toDestroy = true; }
+void PlayerBullet::onDestroy() {
+  light->toDestroy = true;
+}
 
 void PlayerBullet::configureInstance(Entity *entity, Angle direction) {
   Audio(AUDIO_PLAYER_FIRE).play();
