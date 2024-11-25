@@ -11,7 +11,8 @@
 #define IMAGE_FILE "res/images/oneturret.png"
 Vector2f SIZE = {32, 32};
 
-void Turret::start() {}
+void Turret::start() {
+}
 
 void Turret::update(float deltaTime) {
   if (entity->get<Enemy>()->allowFire) {
@@ -34,9 +35,10 @@ void Turret::configureInstance(Entity *entity, float fireRate,
                                float rotationSpeed) {
 
   Sprite *sprite = entity->add<Sprite>();
-  sprite->addAnimation(
-      "fire", generateSpritesheetAnimationButNotShit({"res/images/oneturret-sheet.png"}, 32),
-      0.1);
+  sprite->addAnimation("fire",
+                       generateSpritesheetAnimationButNotShit(
+                           {"res/images/oneturret-sheet.png"}, 32),
+                       0.1);
   sprite->image = {IMAGE_FILE};
 
   entity->add<Enemy>();
@@ -46,7 +48,7 @@ void Turret::configureInstance(Entity *entity, float fireRate,
 
   entity->layer = 1;
 
-  entity->add<Scheduler>()->addSchedule("fire", fireRate, [entity, turret]() {
+  entity->add<Scheduler>()->addSchedule("fire", turret->fireRate, [entity, turret]() {
     if (entity->get<Enemy>()->allowFire) {
       Bullet::createInstance(entity->box.getCenter(), turret->fireAngle);
       entity->get<Sprite>()->animations["fire"]->play();

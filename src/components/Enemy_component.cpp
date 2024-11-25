@@ -36,7 +36,7 @@ void Enemy::update(float deltaTime) {
 
     Circle myCircle(entity->box.getCenter(), 7);
     for (Entity *bullet : GameManager::getEntities("PlayerBullet")) {
-      Circle bulletCircle(bullet->box.getCenter(), entity->box.size.y / 2);
+      Circle bulletCircle(bullet->box.getCenter(), entity->box.size.y * 0.7);
       if (bulletCircle.checkCollision(myCircle) && !shield) {
         health--;
         bullet->toDestroy = true;

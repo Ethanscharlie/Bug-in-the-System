@@ -32,14 +32,14 @@ std::vector<std::function<void()>> levels = {
     []() {
       Turret::createInstance({-500, 0});
       Turret::createInstance({500, 0});
-      Turret::createInstance({0, -200}, 300, 70);
+      Turret::createInstance({0, -200});
       ;
     },
     []() {
       Turret::createInstance({-500, 0});
       Turret::createInstance({500, 0});
-      Turret::createInstance({-500, -450}, 2000, 30);
-      Turret::createInstance({500, 450}, 2000, 30);
+      Turret::createInstance({-500, -450});
+      Turret::createInstance({500, 450});
       ;
     },
     []() {
@@ -49,8 +49,8 @@ std::vector<std::function<void()>> levels = {
     []() {
       MultiTurret::createInstance({0, 0});
       Turret::createInstance({500, 0});
-      Turret::createInstance({-500, -450}, 2000, 30);
-      Turret::createInstance({500, 450}, 2000, 30);
+      Turret::createInstance({-500, -450});
+      Turret::createInstance({500, 450});
       ;
     },
     []() {
@@ -59,17 +59,17 @@ std::vector<std::function<void()>> levels = {
       ;
     },
     []() {
-      MultiTurret::createInstance({0, 0}, 200, 3);
-      Turret::createInstance({-500, 200}, 200, 70);
-      Turret::createInstance({500, 200}, 200, 70);
-      Turret::createInstance({0, -200}, 200, 90);
+      MultiTurret::createInstance({0, 0});
+      Turret::createInstance({-500, 200});
+      Turret::createInstance({500, 200});
+      Turret::createInstance({0, -200});
       ;
     },
     []() {
       MultiTurret::createInstance({-500, 450});
       MultiTurret::createInstance({500, -450});
-      Turret::createInstance({-350, 350}, 300, 60);
-      Turret::createInstance({350, -350}, 300, 60);
+      Turret::createInstance({-350, 350});
+      Turret::createInstance({350, -350});
       ;
     },
     []() {
@@ -80,15 +80,15 @@ std::vector<std::function<void()>> levels = {
     []() {
       Drone::createInstance({500, -300});
       Drone::createInstance({500, 450});
-      Turret::createInstance({-500, 0}, 180, 100);
+      Turret::createInstance({-500, 0});
       ;
     },
     []() {
       Drone::createInstance({500, -300});
       Drone::createInstance({500, 450});
-      Turret::createInstance({-500, 200}, 200, 70);
-      Turret::createInstance({500, 200}, 200, 70);
-      Turret::createInstance({0, -200}, 200, 90);
+      Turret::createInstance({-500, 200});
+      Turret::createInstance({500, 200});
+      Turret::createInstance({0, -200});
       ;
     },
     []() {
@@ -110,21 +110,21 @@ std::vector<std::function<void()>> levels = {
       MultiTurret::createInstance({500, -450});
       Drone::createInstance({-500, -450});
       Drone::createInstance({500, 450});
-      Turret::createInstance({-500, 0}, 180, 100);
-      Turret::createInstance({500, 0}, 180, 100);
+      Turret::createInstance({-500, 0});
+      Turret::createInstance({500, 0});
       ;
     },
     []() {
-      MultiTurret::createInstance({0, 0}, 200, 6);
+      MultiTurret::createInstance({0, 0});
       Drone::createInstance({-500, -450});
       Drone::createInstance({500, 450});
       ;
     },
     []() {
-      MultiTurret::createInstance({0, 0}, 200, 6);
+      MultiTurret::createInstance({0, 0});
       Drone::createInstance({500, 450});
-      Turret::createInstance({-500, 0}, 180, 100);
-      Turret::createInstance({500, 0}, 180, 100);
+      Turret::createInstance({-500, 0});
+      Turret::createInstance({500, 0});
       ;
     },
     []() {
@@ -142,9 +142,9 @@ std::vector<std::function<void()>> levels = {
     []() {
       Turret::createInstance({0, 0}, 70, 70);
       Drone::createInstance({-500, -450});
-      MultiTurret::createInstance({-500, 0}, 800, 4);
-      Turret::createInstance({500, 0}, 200, 70);
-      Turret::createInstance({0, -200}, 200, 70);
+      MultiTurret::createInstance({-500, 0});
+      Turret::createInstance({500, 0});
+      Turret::createInstance({0, -200});
       ;
     },
     []() {
@@ -166,9 +166,9 @@ std::vector<std::function<void()>> levels = {
       Turret::createInstance({0, 50}, 70, 20);
       Turret::createInstance({0, -50}, 70, 20);
       GameManager::getComponents<Turret>().back()->fireAngle.rotate(180);
-      MultiTurret::createInstance({500, 0}, 600, 6);
-      MultiTurret::createInstance({-500, 0}, 600, 6);
-      Turret::createInstance({0, -200}, 200, 70);
+      MultiTurret::createInstance({500, 0});
+      MultiTurret::createInstance({-500, 0});
+      Turret::createInstance({0, -200});
       ;
     },
     []() {
@@ -185,9 +185,7 @@ std::vector<std::function<void()>> levels = {
                 []() {
                   Mix_FreeMusic(music);
                   music =
-                      Mix_LoadMUS("res/audio/music/Juhani Junkala [Retro Game
-                                  "
-                                  "Music Pack] Level 3.wav");
+                      Mix_LoadMUS("res/audio/music/Juhani Junkala [Retro Game Music Pack] Level 3.wav");
                   Mix_PlayMusic(music, -1);
                 },
                 true);
