@@ -12,6 +12,8 @@
 Vector2f SIZE = {32, 32};
 
 void Turret::start() {
+  fireAngle.rotate(randFloat(0, 300));
+  entity->get<Sprite>()->angle = fireAngle;
 }
 
 void Turret::update(float deltaTime) {
@@ -48,10 +50,11 @@ void Turret::configureInstance(Entity *entity, float fireRate,
 
   entity->layer = 1;
 
-  entity->add<Scheduler>()->addSchedule("fire", turret->fireRate, [entity, turret]() {
-    if (entity->get<Enemy>()->allowFire) {
-      Bullet::createInstance(entity->box.getCenter(), turret->fireAngle);
-      entity->get<Sprite>()->animations["fire"]->play();
-    }
-  });
+  entity->add<Scheduler>()->addSchedule(
+      "fire", turret->fireRate, [entity, turret]() {
+        if (entity->get<Enemy>()->allowFire) {
+          Bullet::createInstance(entity->box.getCenter(), turret->fireAngle);
+          entity->get<Sprite>()->animations["fire"]->play();
+        }
+      });
 }
