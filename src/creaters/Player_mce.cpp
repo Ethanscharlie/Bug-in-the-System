@@ -3,6 +3,7 @@
 #include "Light.hpp"
 #include "SDL_keycode.h"
 #include "SDL_mixer.h"
+#include "SDL_timer.h"
 #include "Scheduler.hpp"
 #include "Sprite.hpp"
 #include "Vector2f.hpp"
@@ -31,11 +32,15 @@ static void loadLevel(int levelIndex) {
   levels[levelIndex]();
 }
 
-void Player::start() { turn(45); }
+void Player::start() {
+  turn(45);
+  float startTime = SDL_GetTicks();
+}
 
 void Player::turn(float degrees) {
   direction.rotate(degrees);
   Sprite *sprite = entity->get<Sprite>();
+  turns++;
 }
 
 void Player::moveForward() {

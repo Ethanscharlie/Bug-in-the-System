@@ -1,9 +1,11 @@
 #include "Levels.hpp"
 #include "Event.hpp"
 #include "Light.hpp"
+#include "Math.hpp"
 #include "Player_mce.hpp"
 #include "SDL_keycode.h"
 #include "SDL_mixer.h"
+#include "SDL_timer.h"
 #include "Scheduler.hpp"
 #include "Vector2f.hpp"
 #include "components/Enemy_component.hpp"
@@ -183,7 +185,8 @@ std::vector<std::function<void()>> levels = {
                 []() {
                   Mix_FreeMusic(music);
                   music =
-                      Mix_LoadMUS("res/audio/music/Juhani Junkala [Retro Game "
+                      Mix_LoadMUS("res/audio/music/Juhani Junkala [Retro Game
+                                  "
                                   "Music Pack] Level 3.wav");
                   Mix_PlayMusic(music, -1);
                 },
@@ -215,7 +218,7 @@ std::vector<std::function<void()>> levels = {
           ->addSchedule(
               "text 1", 5000,
               []() {
-                TextDrifter::createInstance({0, 300}, "Bug in the System");
+                TextDrifter::createInstance({0, 400}, "Bug in the System");
               },
               true);
       GameManager::getComponents<Player>()[0]
@@ -223,16 +226,36 @@ std::vector<std::function<void()>> levels = {
           ->addSchedule(
               "text 2", 8000,
               []() {
-                TextDrifter::createInstance({0, 50},
+                TextDrifter::createInstance({0, 200},
                                             "Created By Ethanscharlie");
               },
               true);
       GameManager::getComponents<Player>()[0]
           ->entity->add<Scheduler>()
           ->addSchedule(
-              "text 3", 12000,
+              "text a", 11000,
               []() {
-                TextDrifter::createInstance({0, -100}, "Thanks for Playing");
+                TextDrifter::createInstance(
+                    {0, 50},
+                    "Time: " +
+                        floatToString((SDL_GetTicks() - startTime) / 1000));
+              },
+              true);
+      GameManager::getComponents<Player>()[0]
+          ->entity->add<Scheduler>()
+          ->addSchedule(
+              "text f", 13000,
+              []() {
+                TextDrifter::createInstance({0, -40},
+                                            std::format("Turns: {}", turns));
+              },
+              true);
+      GameManager::getComponents<Player>()[0]
+          ->entity->add<Scheduler>()
+          ->addSchedule(
+              "text 3", 16000,
+              []() {
+                TextDrifter::createInstance({0, -200}, "Thanks for Playing");
               },
               true);
       ;

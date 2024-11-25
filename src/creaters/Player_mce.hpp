@@ -3,6 +3,8 @@
 #include "Charlie2D.hpp"
 
 inline Mix_Music *music;
+inline int turns = 0;
+inline float startTime = 0;
 
 class Player : public Component {
 public:

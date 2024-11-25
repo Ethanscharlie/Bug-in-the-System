@@ -34,7 +34,7 @@ void TextDrifter::configureInstance(Entity *entity, std::string text) {
   entity->layer = 200;
 
   Text *textC = entity->add<Text>();
-  textC->changeFont("res/fonts/prstart.ttf", 40);
+  textC->changeFont("res/fonts/ThaleahFat_TTF.ttf", 80);
   textC->text = text;
   textC->text_color = {255, 255, 255};
 
