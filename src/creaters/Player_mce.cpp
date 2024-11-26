@@ -33,8 +33,9 @@ static void loadLevel(int levelIndex) {
 }
 
 void Player::start() {
-  turn(45);
+  turn(-90-45);
   float startTime = SDL_GetTicks();
+  entity->get<Sprite>()->angle = direction;
 }
 
 void Player::turn(float degrees) {
@@ -51,11 +52,14 @@ void Player::moveForward() {
 void Player::update(float deltaTime) {
   // Movement
   if (InputManager::keyEvents[SDLK_SPACE]) {
+    started = true;
+
     turn();
     PlayerBullet::createInstance(entity->box.getCenter(), direction);
   }
 
-  moveForward();
+  if (started)
+    moveForward();
 
   // Smooth turn
   Sprite *sprite = entity->get<Sprite>();
@@ -117,7 +121,7 @@ void Player::update(float deltaTime) {
   }
 
   // Level
-  if (GameManager::getComponents<Enemy>().size() <= 0) {
+  if (GameManager::getComponents<Enemy>().size() <= 0 && started) {
     if (levels.size() > currentLevel) {
       loadLevel(currentLevel);
       currentLevel++;

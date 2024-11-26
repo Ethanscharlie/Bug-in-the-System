@@ -1,5 +1,6 @@
 #include "Charlie2D.hpp"
 #include "Vector2f.hpp"
+#include "creaters/IntoText_mce.hpp"
 #include "creaters/Player_mce.hpp"
 #include "creaters/TextDrifter_mce.hpp"
 #include "creaters/Turret_mce.hpp"
@@ -31,16 +32,16 @@ void play_music() {
 int main(int, char **) {
   GameManager::init();
   GameManager::shadowFilter->shadowFilterTint = {60, 60, 60};
-
-#ifdef __EMSCRIPTEN__
-  Event::addEventListener("LeftMouseButtonDown", []() {
-    if (!musicHasBeenStarted)
-      play_music();
-    musicHasBeenStarted = true;
-  });
-#else
+  //
+  // #ifdef __EMSCRIPTEN__
+  //   Event::addEventListener("LeftMouseButtonDown", []() {
+  //     if (!musicHasBeenStarted)
+  //       play_music();
+  //     musicHasBeenStarted = true;
+  //   });
+  // #else
   play_music();
-#endif
+  // #endif
 
   Entity *background = GameManager::createEntity("Background");
   background->layer = -10;
@@ -48,7 +49,8 @@ int main(int, char **) {
   background->box.setWithCenter({0, 0});
   background->add<Sprite>()->image = {"res/images/background.png"};
 
-  Player::createInstance({0, 0});
+  IntoText::createInstance();
+  Player::createInstance({0, 450});
 
   GameManager::doUpdateLoop();
   return 0;

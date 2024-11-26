@@ -5,6 +5,7 @@
 inline Mix_Music *music;
 inline int turns = 0;
 inline float startTime = 0;
+inline bool started = false;
 
 class Player : public Component {
 public:
