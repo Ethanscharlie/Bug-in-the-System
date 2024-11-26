@@ -184,14 +184,14 @@ std::vector<std::function<void()>> levels = {
                 "drama", 4000,
                 []() {
                   Mix_FreeMusic(music);
-                  music =
-                      Mix_LoadMUS("res/audio/music/Juhani Junkala [Retro Game Music Pack] Level 3.wav");
+                  music = Mix_LoadMUS("res/audio/music/Juhani Junkala [Retro "
+                                      "Game Music Pack] Level 3.wav");
                   Mix_PlayMusic(music, -1);
                 },
                 true);
       }
 
-      Boss::createInstance({0, -300});
+      Boss::createInstance({0, -400});
       Explosion::createInstance({0, 0});
 
       donttouchmusic = true;

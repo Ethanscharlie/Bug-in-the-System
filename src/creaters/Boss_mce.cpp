@@ -29,9 +29,9 @@ void Boss::update(float deltaTime) {
 
     if (healthLock == -1) {
       healthLock = health;
-      delay = true;
-      entity->add<Scheduler>()->addSchedule(
-          "delay", 1000, [this]() { delay = false; }, true);
+      // delay = true;
+      // entity->add<Scheduler>()->addSchedule(
+      //     "delay", 1000, [this]() { delay = false; }, true);
     }
   }
 
@@ -47,36 +47,34 @@ void Boss::update(float deltaTime) {
         if (health == 6) {
           MultiTurret::createInstance({-500, 450});
           MultiTurret::createInstance({500, -450});
-          Turret::createInstance({-350, 350}, 300, 60);
-          Turret::createInstance({350, -350}, 300, 60);
+          MultiTurret::createInstance({-500, -450});
+          MultiTurret::createInstance({500, 250});
+          MultiTurret::createInstance({-500, -200});
         } else if (health == 5) {
           Turret::createInstance({0, 0}, 200, 70);
           Drone::createInstance({-500, -450});
           MultiTurret::createInstance({-500, 0}, 800, 4);
           Turret::createInstance({0, -200}, 200, 70);
         } else if (health == 4) {
-          Turret::createInstance({0, 50}, 200, 50);
-          Turret::createInstance({0, -50}, 200, 50);
-          GameManager::getComponents<Turret>().back()->fireAngle.rotate(180);
+          Turret::createInstance({-500, 200});
+          Turret::createInstance({500, 100});
+          Turret::createInstance({0, 400});
+          MultiTurret::createInstance({500, 250});
           Drone::createInstance({-500, -450});
           Drone::createInstance({500, 450});
         } else if (health == 3) {
-          Turret::createInstance({0, 50}, 200, 50);
-          Turret::createInstance({0, -50}, 200, 50);
-          GameManager::getComponents<Turret>().back()->fireAngle.rotate(180);
-          Drone::createInstance({-500, -450});
-          Drone::createInstance({500, 450});
         } else if (health == 2) {
-          for (int i = 0; i < 8; i++) {
+          healthLock = -1;
+          for (int i = 0; i < 20; i++) {
             entity->add<Scheduler>()->addSchedule(
-                std::format("ex{}", i), randFloat(0, 9000), [this]() {
+                std::format("ex{}", i), randFloat(0, 5000), [this]() {
                   Explosion::createInstance(
                       {randFloat(entity->box.getLeft(), entity->box.getRight()),
                        randFloat(entity->box.getTop(),
                                  entity->box.getBottom())});
                 });
             entity->add<Scheduler>()->addSchedule(
-                std::format("end"), 9000,
+                std::format("end"), 5000,
                 [this]() { entity->toDestroy = true; });
           }
         }
