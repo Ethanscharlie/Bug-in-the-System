@@ -1,6 +1,3 @@
-# Charlie2D-Project-Template
-The official Charlie2D Project Template
-
 # Compile Instructions
 ## Linux
 Install cmake, sdl2, sdl2_ttf, sdl2_mixer, sdl2_gfx, sdl2_image
